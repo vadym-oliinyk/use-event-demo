@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 
-export function useWebSocket({ url }) {
+export function useWebSocket({ url, onClose }) {
   const [socket, setSocket] = useState();
 
   const handleClose = useCallback(() => {
-    socket?.close();
+    if (!socket) return;
+    onClose((message) => socket.send(message));
+    socket.close();
   }, [socket]);
 
   useEffect(() => {
