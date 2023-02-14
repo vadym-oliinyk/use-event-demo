@@ -7,7 +7,7 @@ export function useWebSocket({ url, onClose }) {
     if (!socket) return;
     onClose((message) => socket.send(message));
     socket.close();
-  }, [socket]);
+  }, [socket, onClose]);
 
   useEffect(() => {
     setSocket(new WebSocket(url));
