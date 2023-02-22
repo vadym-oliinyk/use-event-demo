@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useEvent } from "./useEvent";
 
 export function useWebSocket({ url, onClose }) {
   const [socket, setSocket] = useState();
 
-  const onCloseRef = useRef(onClose);
-
-  const handleClose = useCallback(() => {
+  const handleClose = useEvent(() => {
     if (!socket) return;
-    onCloseRef.current((message) => socket.send(message));
+    onClose((message) => socket.send(message));
     socket.close();
-  }, [socket]);
+  });
 
   useEffect(() => {
     setSocket(new WebSocket(url));
@@ -18,10 +18,6 @@ export function useWebSocket({ url, onClose }) {
   useEffect(() => {
     return handleClose;
   }, [handleClose]);
-
-  useEffect(() => {
-    onCloseRef.current = onClose;
-  }, [onClose]);
 
   return socket;
 }
