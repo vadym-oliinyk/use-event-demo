@@ -5,7 +5,7 @@ function Socket() {
     url: "ws://localhost:8001",
   });
 
-  return <p>Socket is open 🥳</p>;
+  return <p className="Socket">Socket is open 🥳</p>;
 }
 
 export default Socket;
